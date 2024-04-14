@@ -21,6 +21,17 @@ class Usermaster(models.Model):
         managed = True
         db_table = 'usermaster'
 
+class Document(models.Model):
+    Id=models.IntegerField(primary_key=True)
+    Title=models.CharField(max_length=100,blank=True,null=True)
+    UploadDocumentType=models.CharField(max_length=100,blank=True,null=True)
+    ContactMobile=models.CharField(max_length=10,blank=True,null=True)
+    Emailid=models.EmailField(blank=True,null=True)
+    Department=models.CharField(max_length=100,blank=True,null=True)
+
+    class Meta:
+        db_table='document'
+
 # class Usermaster(models.Model):
 #     ID=models.AutoField(primary_key=True)
 #     Fullname=models.CharField(max_length=100,blank=True,null=True)
