@@ -1,7 +1,7 @@
 from django.http import JsonResponse,HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
-from .models import Usermaster
+from .models import Usermaster,Document
 from django.core.mail import send_mail
 
 @csrf_exempt
@@ -65,3 +65,31 @@ def signup(request):
 #         response['status']=True
 #         response['message']='Signin successful'
 #         return JsonResponse(response)
+    
+
+@csrf_exempt
+def add_document(request):
+    try:
+        if request.method=='POST':
+            response={}
+            parsed_data=json.loads(request.POST.get('data'))
+            
+            Title=parsed_data.get('title')
+            UploadDocumentType=parsed_data.get('UploadDocumentType')
+            ContactMobile=parsed_data.get('ContactMobile')
+            Emailid=parsed_data.get('Emailid')
+            Department=parsed_data.get('Department')
+
+            document_details=Document.objects.create(Title=Title,
+                                                     UploadDocumentType=UploadDocumentType,
+                                                     ContactMobile=ContactMobile,
+                                                     Emailid=Emailid,
+                                                     Department=Department)
+            response['status']=True
+            response['message']='Details added successfully'
+            return JsonResponse(response)
+    except Exception as e:
+        print(e)
+        response = {'status': False, 'message': 'Something went wrong'}
+        # return HttpResponse(response)
+        return JsonResponse(response)
